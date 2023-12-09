@@ -1,0 +1,179 @@
+Python Project1 : Replicate a Banking system.
+----------------------------
+Write a python program to replicate a Banking system. The following features are mandatory:
+1.Account login
+2. Amount Depositing
+3. Amount Withdrawal
+Other than the above features you can add any other also.
+
+code
+-----
+class BankAccount:
+    def __init__(self, account_number, pin, balance=0):
+        self.account_number = account_number
+        self.pin = pin
+        self.balance = balance
+
+class Bank:
+    def __init__(self):
+        self.accounts = {}
+
+    def create_account(self, account_number, pin):
+        if account_number in self.accounts:
+            print("Account already exists.")
+        else:
+            new_account = BankAccount(account_number, pin)
+            self.accounts[account_number] = new_account
+            print("Account created successfully.")
+
+    def login(self, account_number, pin):
+        if account_number in self.accounts and self.accounts[account_number].pin == pin:
+            return True
+        else:
+            return False
+
+    def deposit(self, account_number, amount):
+        if amount > 0 and account_number in self.accounts:
+            self.accounts[account_number].balance += amount
+            print(f"Deposited ${amount} successfully.")
+        else:
+            print("Invalid deposit amount or account number.")
+
+    def withdraw(self, account_number, amount):
+        if amount > 0 and account_number in self.accounts:
+            if self.accounts[account_number].balance >= amount:
+                self.accounts[account_number].balance -= amount
+                print(f"Withdrawn ${amount} successfully.")
+            else:
+                print("Insufficient funds.")
+        else:
+            print("Invalid withdrawal amount or account number.")
+
+    def check_balance(self, account_number):
+        if account_number in self.accounts:
+            return self.accounts[account_number].balance
+        else:
+            return "Account not found."
+
+bank = Bank()
+
+while True:
+    print("\n1. Create Account")
+    print("2. Login")
+    print("3. Deposit")
+    print("4. Withdraw")
+    print("5. Balance")
+    print("6.Exit")
+    choice = input("Select an option: ")
+
+    if choice == "1":
+        account_number = input("Enter new account number: ")
+        pin = input("Enter PIN: ")
+        bank.create_account(account_number, pin)
+    elif choice == "2":
+        account_number = input("Enter account number: ")
+        pin = input("Enter PIN: ")
+        if bank.login(account_number, pin):
+            print("Login successful.")
+        else:
+            print("Invalid account number or PIN. Login failed.")
+    elif choice == "3":
+        account_number = input("Enter account number: ")
+        amount = float(input("Enter amount to deposit: "))
+        bank.deposit(account_number, amount)
+    elif choice == "4":
+        account_number = input("Enter account number: ")
+        amount = float(input("Enter amount to withdraw: "))
+        bank.withdraw(account_number, amount)
+
+    elif choice == "5":
+        account_number = input("Enter account number: ")
+        if account_number in bank.accounts:
+            balance = bank.check_balance(account_number)
+            print(f"Balance for account {account_number}: ${balance}")
+        else:
+            print("Account not found.")
+    elif choice == "6":
+        print("Thank you for choosing our  banking system.")
+        break
+    else:
+        print("Invalid choice. Please select again.")
+
+output
+--------
+
+1. Create Account
+2. Login
+3. Deposit
+4. Withdraw
+5. Balance
+6.Exit
+Select an option: 1
+Enter new account number: 12345
+Enter PIN: 1122
+Account created successfully.
+
+1. Create Account
+2. Login
+3. Deposit
+4. Withdraw
+5. Balance
+6.Exit
+Select an option: 2
+Enter account number: 12345
+Enter PIN: 1122
+Login successful.
+
+1. Create Account
+2. Login
+3. Deposit
+4. Withdraw
+5. Balance
+6.Exit
+Select an option: 5
+Enter account number: 12345
+Balance for account 12345: $0
+
+1. Create Account
+2. Login
+3. Deposit
+4. Withdraw
+5. Balance
+6.Exit
+Select an option: 3
+Enter account number: 12345
+Enter amount to deposit: 5000
+Deposited $5000.0 successfully.
+
+1. Create Account
+2. Login
+3. Deposit
+4. Withdraw
+5. Balance
+6.Exit
+Select an option: 4
+Enter account number: 12345
+Enter amount to withdraw: 2000
+Withdrawn $2000.0 successfully.
+
+1. Create Account
+2. Login
+3. Deposit
+4. Withdraw
+5. Balance
+6.Exit
+Select an option: 5
+Enter account number: 12345
+Balance for account 12345: $3000.0
+
+1. Create Account
+2. Login
+3. Deposit
+4. Withdraw
+5. Balance
+6.Exit
+Select an option: 6
+Thank you for choosing our  banking system.
+
+Process finished with exit code 0
+
